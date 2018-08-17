@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 require 'spec_helper'
 
 RSpec.describe Mail::SES do
-  let(:ses_options){ {stub_responses: true} }
+  let(:ses_options) { { stub_responses: true } }
 
   let(:ses) do
     described_class.new(ses_options)
@@ -18,17 +19,16 @@ RSpec.describe Mail::SES do
   end
 
   describe '::VERSION' do
-    it { expect(described_class::VERSION).to match /\A\d+\.\d+\.\d+/ }
+    it { expect(described_class::VERSION).to match(/\A\d+\.\d+\.\d+/) }
   end
 
   describe '#initialize' do
-
     it 'accepts valid :error_handler' do
       expect(described_class.new(ses_options)).to be_a(Mail::SES)
     end
 
     it 'accepts valid :error_handler' do
-      expect(described_class.new(ses_options.merge(error_handler: ->(a,b){}))).to be_a(Mail::SES)
+      expect(described_class.new(ses_options.merge(error_handler: ->(a, b) {}))).to be_a(Mail::SES)
     end
 
     it 'rejects invalid :error_handler' do
@@ -49,34 +49,33 @@ RSpec.describe Mail::SES do
   end
 
   describe '#deliver!' do
-
     it 'validates that mail is a Mail' do
-      expect{ ses.deliver!(foo: :bar) }.to raise_error(ArgumentError, 'mail must be an instance of Mail::Message class')
+      expect { ses.deliver!(foo: :bar) }.to raise_error(ArgumentError, 'mail must be an instance of Mail::Message class')
     end
 
     it 'validates integrity of Mail' do
-      expect{ ses.deliver!(Mail.new) }.to raise_error(ArgumentError, 'SMTP From address may not be blank: nil')
-      expect{ ses.deliver!(Mail.new{from 'foo@bar.com'}) }.to raise_error(ArgumentError, 'SMTP To address may not be blank: []')
+      expect { ses.deliver!(Mail.new) }.to raise_error(ArgumentError, 'SMTP From address may not be blank: nil')
+      expect { ses.deliver!(Mail.new { from 'foo@bar.com' }) }.to raise_error(ArgumentError, 'SMTP To address may not be blank: []')
     end
 
     it 'validates attachment without body' do
       mail.body = nil
       mail.add_file __FILE__
-      expect{ ses.deliver!(mail) }.to raise_error(ArgumentError, 'Attachment provided without message body')
+      expect { ses.deliver!(mail) }.to raise_error(ArgumentError, 'Attachment provided without message body')
     end
 
     context 'when options set' do
       before { allow_any_instance_of(Mail::Message).to receive(:to_s).and_return('Fixed message body') }
-      let(:ses_options){ {stub_responses: true, mail_options: {source: 'foo@bar.com', source_arn: 'sa1'}} }
+      let(:ses_options) { { stub_responses: true, mail_options: { source: 'foo@bar.com', source_arn: 'sa1' } } }
 
       let(:exp) do
         {
-            source: 'foo@bar.com',
-            source_arn: 'sa2',
-            destinations: %w[to1@def.com to2@xyz.com cc1@xyz.com cc2@def.com bcc1@abc.com bcc2@def.com],
-            raw_message: {
-                data: "Rml4ZWQgbWVzc2FnZSBib2R5\n"
-            }
+          source: 'foo@bar.com',
+          source_arn: 'sa2',
+          destinations: %w[to1@def.com to2@xyz.com cc1@xyz.com cc2@def.com bcc1@abc.com bcc2@def.com],
+          raw_message: {
+            data: "Rml4ZWQgbWVzc2FnZSBib2R5\n"
+          }
         }
       end
 
@@ -105,7 +104,7 @@ RSpec.describe Mail::SES do
       end
 
       context 'when :error_handler set' do
-        let(:ses_options){ { stub_responses: true, error_handler: ->(a,b){} } }
+        let(:ses_options) { { stub_responses: true, error_handler: ->(a, b) {} } }
 
         it 'calls the error handler' do
           expect(ses_options[:error_handler]).to receive(:call).and_call_original
@@ -123,11 +122,11 @@ RSpec.describe Mail::SES do
     context 'without options' do
       let(:exp) do
         {
-            source: 'from@abc.com',
-            destinations: %w[to1@def.com to2@xyz.com cc1@xyz.com cc2@def.com bcc1@abc.com bcc2@def.com],
-            raw_message: {
-                data: "Rml4ZWQgbWVzc2FnZSBib2R5\n"
-            }
+          source: 'from@abc.com',
+          destinations: %w[to1@def.com to2@xyz.com cc1@xyz.com cc2@def.com bcc1@abc.com bcc2@def.com],
+          raw_message: {
+            data: "Rml4ZWQgbWVzc2FnZSBib2R5\n"
+          }
         }
       end
 
@@ -147,18 +146,18 @@ RSpec.describe Mail::SES do
 
       let(:exp) do
         {
-            source: 'source@source.com',
-            source_arn: 'source_arn',
-            from_arn: 'from_arn',
-            return_path_arn: 'return_path_arn',
-            tags: [
-                {name: 'Name', value: 'Value'}
-            ],
-            configuration_set_name: 'configuration_set_name',
-            destinations: %w[to1@def.com to2@xyz.com cc1@xyz.com cc2@def.com bcc1@abc.com bcc2@def.com],
-            raw_message: {
-                data: "Rml4ZWQgbWVzc2FnZSBib2R5\n"
-            }
+          source: 'source@source.com',
+          source_arn: 'source_arn',
+          from_arn: 'from_arn',
+          return_path_arn: 'return_path_arn',
+          tags: [
+            { name: 'Name', value: 'Value' }
+          ],
+          configuration_set_name: 'configuration_set_name',
+          destinations: %w[to1@def.com to2@xyz.com cc1@xyz.com cc2@def.com bcc1@abc.com bcc2@def.com],
+          raw_message: {
+            data: "Rml4ZWQgbWVzc2FnZSBib2R5\n"
+          }
         }
       end
 

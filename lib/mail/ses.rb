@@ -1,10 +1,15 @@
+# frozen_string_literal: true
 module Mail
-
   # Mail delivery method handler for AWS SES
   class SES
     VERSION = File.read(File.join(File.dirname(__FILE__), '../../VERSION')).strip.freeze
 
-    RAW_EMAIL_ATTRS = %i[source source_arn from_arn return_path_arn tags configuration_set_name].freeze
+    RAW_EMAIL_ATTRS = %i[ source
+                          source_arn
+                          from_arn
+                          return_path_arn
+                          tags
+                          configuration_set_name ].freeze
 
     attr_reader :client
 
@@ -37,7 +42,7 @@ module Mail
         response = client.send_raw_email(raw_email_options)
         mail.message_id = "#{response.to_h[:message_id]}@email.amazonses.com"
         response
-      rescue => e
+      rescue StandardError => e
         @error_handler ? @error_handler.call(e, raw_email_options.dup) : raise(e)
       end
     end
@@ -68,14 +73,14 @@ module Mail
         output = slice_hash(options, *RAW_EMAIL_ATTRS)
         output[:source] ||= message.from.first
         output[:destinations] = [message.to, message.cc, message.bcc].flatten.compact
-        output[:raw_message] = { data: Base64::encode64(message.to_s) }
+        output[:raw_message] = { data: Base64.encode64(message.to_s) }
         output
       end
 
       protected
 
       def slice_hash(hash, *keys)
-        keys.each_with_object({}) { |k, h| h[k] = hash[k] if hash.has_key?(k) }
+        keys.each_with_object({}) { |k, h| h[k] = hash[k] if hash.key?(k) }
       end
     end
   end

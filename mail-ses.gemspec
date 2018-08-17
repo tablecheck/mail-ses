@@ -17,5 +17,5 @@ Gem::Specification.new do |s|
   s.add_dependency('mail', '>= 2.2.5')
   s.add_development_dependency('rake', '>= 1')
   s.add_development_dependency('rspec', '>= 3.8')
-  s.add_development_dependency('rubocop', '>= 0.58')
+  s.add_development_dependency('rubocop', '~> 0.57.0')
 end
