@@ -11,7 +11,8 @@ By passing parameters through to the SDK, this gem supports greater flexibility 
 
 ### Compatibility
 
-* TBD
+* Ruby 2.1+
+* Ruby on Rails 3.2+
 
 ### Shameless Plug
 
