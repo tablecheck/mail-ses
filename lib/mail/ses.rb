@@ -73,7 +73,7 @@ module Mail
         output = slice_hash(options, *RAW_EMAIL_ATTRS)
         output[:source] ||= message.from.first
         output[:destinations] = [message.to, message.cc, message.bcc].flatten.compact
-        output[:raw_message] = { data: Base64.encode64(message.to_s) }
+        output[:raw_message] = { data: message.to_s }
         output
       end
 

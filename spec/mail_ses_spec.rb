@@ -65,7 +65,7 @@ RSpec.describe Mail::SES do
     end
 
     context 'when options set' do
-      before { allow_any_instance_of(Mail::Message).to receive(:to_s).and_return('Fixed message body') }
+      before { allow(mail).to receive(:to_s).and_return('Fixed message body') }
       let(:ses_options) { { stub_responses: true, mail_options: { source: 'foo@bar.com', source_arn: 'sa1' } } }
 
       let(:exp) do
@@ -74,7 +74,7 @@ RSpec.describe Mail::SES do
           source_arn: 'sa2',
           destinations: %w[to1@def.com to2@xyz.com cc1@xyz.com cc2@def.com bcc1@abc.com bcc2@def.com],
           raw_message: {
-            data: "Rml4ZWQgbWVzc2FnZSBib2R5\n"
+            data: 'Fixed message body'
           }
         }
       end
@@ -117,7 +117,7 @@ RSpec.describe Mail::SES do
   describe '::build_raw_email_options' do
     let(:options) { {} }
     subject { described_class.build_raw_email_options(mail, options) }
-    before { allow_any_instance_of(Mail::Message).to receive(:to_s).and_return('Fixed message body') }
+    before { allow(mail).to receive(:to_s).and_return('Fixed message body') }
 
     context 'without options' do
       let(:exp) do
@@ -125,7 +125,7 @@ RSpec.describe Mail::SES do
           source: 'from@abc.com',
           destinations: %w[to1@def.com to2@xyz.com cc1@xyz.com cc2@def.com bcc1@abc.com bcc2@def.com],
           raw_message: {
-            data: "Rml4ZWQgbWVzc2FnZSBib2R5\n"
+            data: 'Fixed message body'
           }
         }
       end
@@ -156,7 +156,7 @@ RSpec.describe Mail::SES do
           configuration_set_name: 'configuration_set_name',
           destinations: %w[to1@def.com to2@xyz.com cc1@xyz.com cc2@def.com bcc1@abc.com bcc2@def.com],
           raw_message: {
-            data: "Rml4ZWQgbWVzc2FnZSBib2R5\n"
+            data: 'Fixed message body'
           }
         }
       end
