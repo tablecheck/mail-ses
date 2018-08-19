@@ -11,6 +11,7 @@ module Mail
                           tags
                           configuration_set_name ].freeze
 
+    attr_accessor :settings
     attr_reader :client
 
     # Initializes the Mail::SES object.
@@ -23,6 +24,7 @@ module Mail
     def initialize(options = {})
       @mail_options = options.delete(:mail_options) || {}
       @error_handler = options.delete(:error_handler)
+      @settings = { return_response: options.delete(:return_response) }
       self.class.validate_error_handler(@error_handler)
       options = self.class.build_client_options(options)
       @client = Aws::SES::Client.new(options)
@@ -41,7 +43,7 @@ module Mail
       begin
         response = client.send_raw_email(raw_email_options)
         mail.message_id = "#{response.to_h[:message_id]}@email.amazonses.com"
-        response
+        settings[:return_response] ? response : self
       rescue StandardError => e
         @error_handler ? @error_handler.call(e, raw_email_options.dup) : raise(e)
       end

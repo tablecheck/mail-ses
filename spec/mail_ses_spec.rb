@@ -22,6 +22,13 @@ RSpec.describe Mail::SES do
     it { expect(described_class::VERSION).to match(/\A\d+\.\d+\.\d+/) }
   end
 
+  describe '#settings' do
+    it do
+      expect(ses).to respond_to(:settings, :settings=)
+      expect(ses.settings).to eq(return_response: nil)
+    end
+  end
+
   describe '#initialize' do
     it 'accepts valid :error_handler' do
       expect(described_class.new(ses_options)).to be_a(Mail::SES)
@@ -91,7 +98,15 @@ RSpec.describe Mail::SES do
     end
 
     it 'returns the AWS response' do
-      expect(ses.deliver!(mail)).to be_a(Seahorse::Client::Response)
+      expect(ses.deliver!(mail)).to be_a(Mail::SES)
+    end
+
+    context 'when :return_response set' do
+      let(:ses_options) { { stub_responses: true, return_response: true } }
+
+      it 'returns the AWS response' do
+        expect(ses.deliver!(mail)).to be_a(Seahorse::Client::Response)
+      end
     end
 
     context 'error handling' do
