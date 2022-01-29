@@ -120,4 +120,4 @@ Mail::SES is sponsored by [TableCheck](http://corp.tablecheck.com/), Japan's lea
 
 ## Copyright
 
-Copyright (c) 2018 TableCheck Inc. See LICENSE for further details.
+Copyright (c) 2018 [TableCheck Inc.](http://corp.tablecheck.com/) See LICENSE for further details.
