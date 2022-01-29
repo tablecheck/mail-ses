@@ -15,10 +15,6 @@ By passing parameters through to the SDK, this gem supports greater flexibility 
 * Ruby on Rails 3.2+
 * AWS SDK v3
 
-### Shameless Plug
-
-ActionMailer::SES is sponsored by [TableCheck](http://corp.tablecheck.com/), Japan's leading restaurant management app. If **you** are a ninja-level Javascript/Ruby coder, designer, project manager, etc. and are eager to work in Tokyo with other ninjas, Japan in a dynamic environment, please get in touch at [careers@tablecheck.com](mailto:careers@tablecheck.com).
-
 ## Getting Started
 
 In your `Gemfile`:
@@ -117,6 +113,10 @@ Please also see the [AWS SDK v3 for SES](https://docs.aws.amazon.com/ses/latest/
 ## Statistics, Verified Addresses, Bounce Rate, etc.
 
 Please use the official [AWS SDK v3 for SES](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-using-sdk-ruby.html).
+
+### Shameless Plug
+
+ActionMailer::SES is sponsored by [TableCheck](http://corp.tablecheck.com/), Japan's leading restaurant management app. If **you** are a ninja-level Javascript/Ruby coder, designer, project manager, etc. and are eager to work in Tokyo with other ninjas, Japan in a dynamic environment, please get in touch at [careers@tablecheck.com](mailto:careers@tablecheck.com).
 
 ## Copyright
 
