@@ -116,7 +116,7 @@ Please use the official [AWS SDK v3 for SES](https://docs.aws.amazon.com/ses/lat
 
 ## Shameless Plug
 
-ActionMailer::SES is sponsored by [TableCheck](http://corp.tablecheck.com/), Japan's leading restaurant management app. If **you** are a ninja-level Javascript/Ruby coder, designer, project manager, etc. and are eager to work in Tokyo with other ninjas, Japan in a dynamic environment, please get in touch at [careers@tablecheck.com](mailto:careers@tablecheck.com).
+Mail::SES is sponsored by [TableCheck](http://corp.tablecheck.com/), Japan's leading restaurant management app. If **you** are a ninja-level Javascript/Ruby coder, designer, project manager, etc. and are eager to work in Tokyo with other ninjas, Japan in a dynamic environment, please get in touch at [careers@tablecheck.com](mailto:careers@tablecheck.com).
 
 ## Copyright
 
