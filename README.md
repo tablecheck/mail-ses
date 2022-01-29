@@ -110,7 +110,7 @@ mail.message_id #=> "00000138111222aa-33322211-cccc-cccc-cccc-ddddaaaa0680-00000
 
 Please also see the [AWS SDK v3 for SES](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-using-sdk-ruby.html) for alternate approaches.
 
-## Statistics, Verified Addresses, Bounce Rate, etc.
+### Statistics, Verified Addresses, Bounce Rate, etc.
 
 Please use the official [AWS SDK v3 for SES](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-using-sdk-ruby.html).
 
