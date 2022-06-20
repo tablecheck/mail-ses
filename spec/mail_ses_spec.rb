@@ -8,6 +8,10 @@ RSpec.describe Mail::SES do
     described_class.new(ses_options)
   end
 
+  let(:to) { %w[to1@def.com to2@xyz.com] }
+  let(:cc) { %w[cc1@xyz.com cc2@def.com] }
+  let(:bcc) { %w[bcc1@abc.com bcc2@def.com] }
+
   let(:mail) do
     Mail.new do
       from 'from@abc.com'
@@ -73,28 +77,34 @@ RSpec.describe Mail::SES do
 
     context 'when options set' do
       before { allow(mail).to receive(:to_s).and_return('Fixed message body') }
-      let(:ses_options) { { stub_responses: true, mail_options: { source: 'foo@bar.com', source_arn: 'sa1' } } }
+      let(:ses_options) { { stub_responses: true, mail_options: { from_email_address: 'foo@bar.com', from_email_address_identity_arn: 'sa1' } } }
 
       let(:exp) do
         {
-          source: 'foo@bar.com',
-          source_arn: 'sa2',
-          destinations: %w[to1@def.com to2@xyz.com cc1@xyz.com cc2@def.com bcc1@abc.com bcc2@def.com],
-          raw_message: {
-            data: 'Fixed message body'
+          from_email_address: 'foo@bar.com',
+          from_email_address_identity_arn: 'sa2',
+          destination: {
+            to_addresses: to,
+            cc_addresses: cc,
+            bcc_addresses: bcc,
+          },
+          content: {
+            raw: {
+              data: 'Fixed message body'
+            }
           }
         }
       end
 
       it 'allows pass-thru and override of default options' do
-        expect(ses.client).to receive(:send_raw_email).with(exp)
-        ses.deliver!(mail, source_arn: 'sa2')
+        expect(ses.client).to receive(:send_email).with(exp)
+        ses.deliver!(mail, from_email_address_identity_arn: 'sa2')
       end
     end
 
     it 'sets mail.message_id' do
       ses.deliver!(mail)
-      expect(mail.message_id).to eq('MessageId@email.amazonses.com')
+      expect(mail.message_id).to eq('OutboundMessageId@email.amazonses.com')
     end
 
     it 'returns the AWS response' do
@@ -110,7 +120,7 @@ RSpec.describe Mail::SES do
     end
 
     context 'error handling' do
-      before { allow_any_instance_of(Aws::SES::Client).to receive(:send_raw_email).and_raise(RuntimeError.new('test')) }
+      before { allow_any_instance_of(Aws::SESV2::Client).to receive(:send_email).and_raise(RuntimeError.new('test')) }
 
       context 'when :error_handler not set' do
         it 'raises the error' do
@@ -137,10 +147,16 @@ RSpec.describe Mail::SES do
     context 'without options' do
       let(:exp) do
         {
-          source: 'from@abc.com',
-          destinations: %w[to1@def.com to2@xyz.com cc1@xyz.com cc2@def.com bcc1@abc.com bcc2@def.com],
-          raw_message: {
-            data: 'Fixed message body'
+          from_email_address: 'from@abc.com',
+          destination: {
+            to_addresses: to,
+            cc_addresses: cc,
+            bcc_addresses: bcc,
+          },
+          content: {
+            raw: {
+              data: 'Fixed message body'
+            }
           }
         }
       end
@@ -150,28 +166,34 @@ RSpec.describe Mail::SES do
 
     context 'with options' do
       let(:options) do
-        { source: 'source@source.com',
-          source_arn: 'source_arn',
-          from_arn: 'from_arn',
-          return_path_arn: 'return_path_arn',
-          tags: [{ name: 'Name', value: 'Value' }],
+        { from_email_address: 'source@source.com',
+          from_email_address_identity_arn: 'from_arn',
+          feedback_forwarding_email_address: 'feedback@feedback.com',
+          feedback_forwarding_email_address_identity_arn: 'feedback_arn',
+          email_tags: [{ name: 'Name', value: 'Value' }],
           configuration_set_name: 'configuration_set_name',
           other: 'other' }
       end
 
       let(:exp) do
         {
-          source: 'source@source.com',
-          source_arn: 'source_arn',
-          from_arn: 'from_arn',
-          return_path_arn: 'return_path_arn',
-          tags: [
+          from_email_address: 'source@source.com',
+          from_email_address_identity_arn: 'from_arn',
+          feedback_forwarding_email_address: 'feedback@feedback.com',
+          feedback_forwarding_email_address_identity_arn: 'feedback_arn',
+          email_tags: [
             { name: 'Name', value: 'Value' }
           ],
           configuration_set_name: 'configuration_set_name',
-          destinations: %w[to1@def.com to2@xyz.com cc1@xyz.com cc2@def.com bcc1@abc.com bcc2@def.com],
-          raw_message: {
-            data: 'Fixed message body'
+          destination: {
+            to_addresses: to,
+            cc_addresses: cc,
+            bcc_addresses: bcc,
+          },
+          content: {
+            raw: {
+              data: 'Fixed message body'
+            }
           }
         }
       end

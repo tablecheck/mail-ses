@@ -42,7 +42,7 @@ config.action_mailer.delivery_method = :ses
 
 ### AWS SES Client Options
 
-Any options supported by the `Aws::SES::Client` class can be passed into the initializer, for example:
+Any options supported by the `Aws::SESV2::Client` class can be passed into the initializer, for example:
 
 ```ruby
 ActionMailer::Base.add_delivery_method :ses, Mail::SES,
@@ -68,8 +68,8 @@ In the initializer you can set `:mail_options (Hash)` which are default options 
 ActionMailer::Base.add_delivery_method :ses, Mail::SES,
     # ...
     mail_options: {
-      source_arn: 'arn:aws:ses:us-east-1:123456789012:identity/example.com',
-      tags: [
+      from_email_address_identity_arn: 'arn:aws:ses:us-east-1:123456789012:identity/example.com',
+      email_tags: [
         { name: 'MessageTagName', value: 'MessageTagValue' },
       ],
     }
@@ -101,7 +101,7 @@ ses  = Mail::SES.new(region: 'us-east-1',
                      access_key_id: 'abc',
                      secret_access_key: '123')
 
-options = { source_arn: 'arn:aws:ses:us-east-1:123456789012:identity/example.com' }
+options = { from_email_address_identity_arn: 'arn:aws:ses:us-east-1:123456789012:identity/example.com' }
 
 ses.deliver!(mail, options) #=> returns AWS API response
 
