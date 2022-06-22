@@ -73,11 +73,11 @@ module Mail
 
       def build_raw_email_options(message, options = {})
         output = slice_hash(options, *RAW_EMAIL_ATTRS)
-        output[:from_email_address] ||= message.from.first
+        output[:from_email_address] ||= message.from.first if message.from&.first
         output[:destination] = {
-          to_addresses: [message.to].flatten,
-          cc_addresses: [message.cc].flatten,
-          bcc_addresses: [message.bcc].flatten,
+          to_addresses: Array(message.to).compact,
+          cc_addresses: Array(message.cc).compact,
+          bcc_addresses: Array(message.bcc).compact,
         }
         output[:content] = { raw: { data: message.to_s } }
         output
