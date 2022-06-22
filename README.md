@@ -1,5 +1,5 @@
 [![Gem Version](https://badge.fury.io/rb/mail-ses.svg)](http://badge.fury.io/rb/mail-ses)
-[![build](https://github.com/tablecheck/mail-ses/actions/workflows/build.yml/badge.svg)](https://github.com/tablecheck/mail-ses/actions/workflows/build.yml)
+[![Github Actions](https://github.com/tablecheck/mail-ses/actions/workflows/test.yml/badge.svg)](https://github.com/tablecheck/mail-ses/actions/workflows/test.yml)
 
 # Mail::SES
 
@@ -118,8 +118,8 @@ Please use the official [AWS SDK v3 for SES](https://docs.aws.amazon.com/ses/lat
 
 ## Shameless Plug
 
-Mail::SES is sponsored by [TableCheck](http://corp.tablecheck.com/), Japan's leading restaurant management app. If **you** are a ninja-level Javascript/Ruby coder, designer, project manager, etc. and are eager to work in Tokyo with other ninjas, Japan in a dynamic environment, please get in touch at [careers@tablecheck.com](mailto:careers@tablecheck.com).
+Mail::SES is sponsored by [TableCheck](http://www.tablecheck.com/en/company/), Japan's leading restaurant management app. If **you** are a ninja-level Javascript/Ruby coder, designer, project manager, etc. and are eager to work in Tokyo with other ninjas, Japan in a dynamic environment, please get in touch at [careers@tablecheck.com](mailto:careers@tablecheck.com).
 
 ## Copyright
 
-Copyright (c) 2018 [TableCheck Inc.](http://corp.tablecheck.com/) See LICENSE for further details.
+Copyright (c) 2018 [TableCheck Inc.](http://www.tablecheck.com/en/company/) See LICENSE for further details.
