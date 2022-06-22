@@ -1,19 +1,21 @@
 [![Gem Version](https://badge.fury.io/rb/mail-ses.svg)](http://badge.fury.io/rb/mail-ses)
-[![Travis Status](https://travis-ci.org/tablecheck/mail-ses.svg?branch=master)](https://travis-ci.org/tablecheck/mail-ses)
+[![build](https://github.com/tablecheck/mail-ses/actions/workflows/build.yml/badge.svg)](https://github.com/tablecheck/mail-ses/actions/workflows/build.yml)
 
 # Mail::SES
 
 Mail::SES is a mail delivery method handler for Amazon SES (Simple Email Service) which can be used with Rails' [Action Mailer](https://guides.rubyonrails.org/action_mailer_basics.html).
 
 This gem is inspired by [Drew Blas' AWS::SES gem](https://github.com/drewblas/aws-ses),
-but uses the official [AWS SDK v3 for SES](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-using-sdk-ruby.html) under-the-hood.
+but uses the official [AWS SDK for Ruby v3 - SESv2](https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SESV2.html) under-the-hood.
 By passing parameters through to the SDK, this gem supports greater flexibility with less code (including IAM instance profiles, retry parameters, etc.)
 
 ### Compatibility
 
-* Ruby 2.1+
+* Ruby 2.6+
 * Ruby on Rails 3.2+
-* AWS SDK v3
+* AWS SDK for Ruby v3 - SESv2
+
+Please use version 0.1.x of this gem for legacy Ruby and AWS SDK support.
 
 ## Getting Started
 

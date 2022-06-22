@@ -8,10 +8,6 @@ RSpec.describe Mail::SES do
     described_class.new(ses_options)
   end
 
-  let(:to) { %w[to1@def.com to2@xyz.com] }
-  let(:cc) { %w[cc1@xyz.com cc2@def.com] }
-  let(:bcc) { %w[bcc1@abc.com bcc2@def.com] }
-
   let(:mail) do
     Mail.new do
       from 'from@abc.com'
@@ -84,9 +80,9 @@ RSpec.describe Mail::SES do
           from_email_address: 'foo@bar.com',
           from_email_address_identity_arn: 'sa2',
           destination: {
-            to_addresses: to,
-            cc_addresses: cc,
-            bcc_addresses: bcc,
+            to_addresses: %w[to1@def.com to2@xyz.com],
+            cc_addresses: %w[cc1@xyz.com cc2@def.com],
+            bcc_addresses: %w[bcc1@abc.com bcc2@def.com]
           },
           content: {
             raw: {
@@ -149,9 +145,9 @@ RSpec.describe Mail::SES do
         {
           from_email_address: 'from@abc.com',
           destination: {
-            to_addresses: to,
-            cc_addresses: cc,
-            bcc_addresses: bcc,
+            to_addresses: %w[to1@def.com to2@xyz.com],
+            cc_addresses: %w[cc1@xyz.com cc2@def.com],
+            bcc_addresses: %w[bcc1@abc.com bcc2@def.com]
           },
           content: {
             raw: {
@@ -162,6 +158,30 @@ RSpec.describe Mail::SES do
       end
 
       it { expect(subject).to eq(exp) }
+
+      context 'without mail from' do
+        before { mail.from = nil  }
+
+        it { expect(subject.key?(:from_email_address)).to eq(false) }
+      end
+
+      context 'without mail destination' do
+        before do
+          mail.to = nil
+          mail.cc = nil
+          mail.bcc = nil
+        end
+
+        let(:exp) do
+          {
+            to_addresses: [],
+            cc_addresses: [],
+            bcc_addresses: [],
+          }
+        end
+
+        it { expect(subject[:destination]).to eq(exp) }
+      end
     end
 
     context 'with options' do
@@ -186,9 +206,9 @@ RSpec.describe Mail::SES do
           ],
           configuration_set_name: 'configuration_set_name',
           destination: {
-            to_addresses: to,
-            cc_addresses: cc,
-            bcc_addresses: bcc,
+            to_addresses: %w[to1@def.com to2@xyz.com],
+            cc_addresses: %w[cc1@xyz.com cc2@def.com],
+            bcc_addresses: %w[bcc1@abc.com bcc2@def.com]
           },
           content: {
             raw: {
