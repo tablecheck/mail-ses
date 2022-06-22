@@ -1,5 +1,15 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.6
+
 Layout/DotPosition:
   EnforcedStyle: leading
+
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    - 'spec/**/*.rb'
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
@@ -7,6 +17,10 @@ Layout/MultilineMethodCallIndentation:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*.rb'
+
+Naming/FileName:
+  Exclude:
+    - 'lib/mail-ses.rb'
 
 Style/GuardClause:
   Enabled: false
@@ -16,8 +30,3 @@ Style/IfUnlessModifier:
 
 Style/RaiseArgs:
   EnforcedStyle: compact
-
-Metrics/LineLength:
-  Max: 120
-  Exclude:
-    - 'spec/**/*.rb'
