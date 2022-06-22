@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.email       = 'info@tablecheck.com'
   s.files       = Dir.glob('lib/**/*') + %w[CHANGELOG.md LICENSE README.md]
   s.homepage    = 'https://github.com/tablecheck/mail-ses'
-  s.required_ruby_version = '2.6.0'
+  s.required_ruby_version = '~> 2.6.0'
 
   s.add_dependency('aws-sdk-sesv2', '>= 1.27')
   s.add_dependency('mail', '>= 2.2.5')
