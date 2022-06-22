@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'mail/ses/version'
-require 'mail/ses/mail_validator'
+require 'mail/ses/message_validator'
 require 'mail/ses/options_builder'
 
 module Mail
@@ -36,21 +36,21 @@ module Mail
       @client = Aws::SESV2::Client.new(options)
     end
 
-    # Delivers a Mail object via SES.
+    # Delivers a Mail::Message object via SES.
     #
-    # mail    - The Mail object to deliver (required).
+    # message - The Mail::Message object to deliver (required).
     # options - The Hash options which override any defaults set in :mail_options
     #           in the initializer (optional, default: {}). Refer to
     #           Aws::SESV2::Client#send_email
-    def deliver!(mail, options = {})
-      MailValidator.new(mail).validate
+    def deliver!(message, options = {})
+      MessageValidator.new(message).validate
 
       options = @mail_options.merge(options || {})
-      send_options = OptionsBuilder.new(mail, options).build
+      send_options = OptionsBuilder.new(message, options).build
 
       begin
         response = client.send_email(send_options)
-        mail.message_id = "#{response.to_h[:message_id]}@email.amazonses.com"
+        message.message_id = "#{response.to_h[:message_id]}@email.amazonses.com"
         settings[:return_response] ? response : self
       rescue StandardError => e
         handle_error(e, send_options)

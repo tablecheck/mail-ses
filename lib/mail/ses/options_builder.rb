@@ -4,11 +4,15 @@ module Mail
   class SES
     # Builds options for Aws::SESV2::Client#send_email
     class OptionsBuilder
+      # message - The Mail::Message object to be sent.
+      # options - The Hash options which override any defaults
+      #           from the message.
       def initialize(message, options = {})
         @message = message
         @options = options
       end
 
+      # Returns the options for Aws::SESV2::Client#send_email.
       def build
         message_options.merge(ses_options)
       end
