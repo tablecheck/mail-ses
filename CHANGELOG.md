@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.0.1
+
+- Add compatibility with Mail gem 2.8.0.
+
 ### 1.0.0
 
 - BREAKING CHANGE: Upgrade to AWS Ruby SDK v3 - SESv2 API ([@khrvi](https://github.com/khrvi))
