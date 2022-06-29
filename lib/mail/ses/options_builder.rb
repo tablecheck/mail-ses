@@ -25,11 +25,12 @@ module Mail
 
       def message_options
         {
-          from_email_address: @message.from&.first,
+          from_email_address: extract_value(:from)&.first,
+          reply_to_addresses: extract_value(:reply_to),
           destination: {
-            to_addresses: Array(@message.to).compact,
-            cc_addresses: Array(@message.cc).compact,
-            bcc_addresses: Array(@message.bcc).compact
+            to_addresses: extract_value(:to) || [],
+            cc_addresses: extract_value(:cc) || [],
+            bcc_addresses: extract_value(:bcc) || []
           },
           content: { raw: { data: @message.to_s } }
         }.compact
@@ -37,6 +38,10 @@ module Mail
 
       def slice_hash(hash, *keys)
         keys.each_with_object({}) { |k, h| h[k] = hash[k] if hash.key?(k) }
+      end
+
+      def extract_value(key)
+        @message.header[key]&.formatted
       end
     end
   end

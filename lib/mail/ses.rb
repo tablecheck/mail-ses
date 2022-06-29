@@ -9,6 +9,7 @@ module Mail
   class SES
     RAW_EMAIL_ATTRS = %i[ from_email_address
                           from_email_address_identity_arn
+                          reply_to_addresses
                           feedback_forwarding_email_address
                           feedback_forwarding_email_address_identity_arn
                           email_tags
