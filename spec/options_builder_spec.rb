@@ -6,10 +6,11 @@ RSpec.describe Mail::SES::OptionsBuilder do
   describe 'build' do
     let(:mail) do
       Mail.new do
-        from 'from@abc.com'
-        to %w[to1@def.com to2@xyz.com]
-        cc %w[cc1@xyz.com cc2@def.com]
-        bcc %w[bcc1@abc.com bcc2@def.com]
+        from '"My From" <from@abc.com>'
+        reply_to ['reply-to1@def.com', '', 'My Reply-To <rt@qqq.com>']
+        to ['to1@def.com', 'My To <to2@xyz.com>', '']
+        cc ['', 'cc1@xyz.com', 'My CC <cc2@def.com>']
+        bcc ['My BCC <bcc1@abc.com>', '', 'bcc2@def.com']
         body 'This is the body'
       end
     end
@@ -21,11 +22,12 @@ RSpec.describe Mail::SES::OptionsBuilder do
     context 'without options' do
       let(:exp) do
         {
-          from_email_address: 'from@abc.com',
+          from_email_address: 'My From <from@abc.com>',
+          reply_to_addresses: ['reply-to1@def.com', 'My Reply-To <rt@qqq.com>'],
           destination: {
-            to_addresses: %w[to1@def.com to2@xyz.com],
-            cc_addresses: %w[cc1@xyz.com cc2@def.com],
-            bcc_addresses: %w[bcc1@abc.com bcc2@def.com]
+            to_addresses: ['to1@def.com', 'My To <to2@xyz.com>'],
+            cc_addresses: ['cc1@xyz.com', 'My CC <cc2@def.com>'],
+            bcc_addresses: ['My BCC <bcc1@abc.com>', 'bcc2@def.com']
           },
           content: {
             raw: {
@@ -83,10 +85,11 @@ RSpec.describe Mail::SES::OptionsBuilder do
             { name: 'Name', value: 'Value' }
           ],
           configuration_set_name: 'configuration_set_name',
+          reply_to_addresses: ['reply-to1@def.com', 'My Reply-To <rt@qqq.com>'],
           destination: {
-            to_addresses: %w[to1@def.com to2@xyz.com],
-            cc_addresses: %w[cc1@xyz.com cc2@def.com],
-            bcc_addresses: %w[bcc1@abc.com bcc2@def.com]
+            to_addresses: ['to1@def.com', 'My To <to2@xyz.com>'],
+            cc_addresses: ['cc1@xyz.com', 'My CC <cc2@def.com>'],
+            bcc_addresses: ['My BCC <bcc1@abc.com>', 'bcc2@def.com']
           },
           content: {
             raw: {

@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.0.2
+
+- Fix labels in being stripped from email addresses.
+- Support Reply-To address.
+
 ### 1.0.1
 
 - Add compatibility with Mail gem 2.8.0.
