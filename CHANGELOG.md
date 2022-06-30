@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.0.3
+
+- Support UTF-8 chars in from, to, etc addresses.
+
 ### 1.0.2
 
 - Fix labels in being stripped from email addresses.

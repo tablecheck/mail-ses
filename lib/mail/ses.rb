@@ -7,14 +7,6 @@ require 'mail/ses/options_builder'
 module Mail
   # Mail delivery method handler for AWS SES
   class SES
-    RAW_EMAIL_ATTRS = %i[ from_email_address
-                          from_email_address_identity_arn
-                          reply_to_addresses
-                          feedback_forwarding_email_address
-                          feedback_forwarding_email_address_identity_arn
-                          email_tags
-                          configuration_set_name ].freeze
-
     attr_accessor :settings
     attr_reader :client
 
