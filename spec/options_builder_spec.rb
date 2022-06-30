@@ -101,5 +101,33 @@ RSpec.describe Mail::SES::OptionsBuilder do
 
       it { expect(subject).to eq(exp) }
     end
+
+    context 'when addresses contain non-ascii chars' do
+      let(:mail) do
+        Mail.new do
+          from '了承ございます <test@utf8.com>'
+          reply_to ['了承ございます. <test@utf8.com>', '', 'My Reply-To <rt@qqq.com>']
+          to ['to1@def.com', 'To テスト <to2@xyz.com>', '']
+          cc ['', 'cc1@xyz.com', 'CC テスト <cc2@def.com>']
+          bcc ['BCC テストです。 <bcc1@abc.com>', '', 'bcc2@def.com']
+          body 'This is the body'
+        end
+      end
+
+      let(:exp) do
+        {
+          from_email_address: '=?UTF-8?B?5LqG5om/44GU44GW44GE44G+44GZ?= <test@utf8.com>',
+          reply_to_addresses: ['=?UTF-8?B?5LqG5om/44GU44GW44GE44G+44GZLg==?= <test@utf8.com>', 'My Reply-To <rt@qqq.com>'],
+          destination: {
+            to_addresses: ['to1@def.com', '=?UTF-8?B?VG8g44OG44K544OI?= <to2@xyz.com>'],
+            cc_addresses: ['cc1@xyz.com', '=?UTF-8?B?Q0Mg44OG44K544OI?= <cc2@def.com>'],
+            bcc_addresses: ['=?UTF-8?B?QkNDIOODhuOCueODiOOBp+OBmeOAgg==?= <bcc1@abc.com>', 'bcc2@def.com']
+          },
+          content: { raw: { data: 'Fixed message body' } }
+        }
+      end
+
+      it { expect(subject).to eq(exp) }
+    end
   end
 end
