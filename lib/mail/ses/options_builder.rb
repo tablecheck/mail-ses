@@ -50,7 +50,10 @@ module Mail
       end
 
       def extract_value(key)
-        @message.header[key]&.formatted&.map { |v| encode(v) }
+        value = @message.header[key]
+        return unless value.respond_to?(:formatted)
+
+        value.formatted&.map { |v| encode(v) }
       end
 
       def encode(value)

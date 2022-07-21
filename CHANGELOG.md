@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.0.4
+
+- Fix missing method error related to message headers.
+
 ### 1.0.3
 
 - Support UTF-8 chars in from, to, etc addresses.
