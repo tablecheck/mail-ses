@@ -129,5 +129,32 @@ RSpec.describe Mail::SES::OptionsBuilder do
 
       it { expect(subject).to eq(exp) }
     end
+
+    context 'when addresses are invalid' do
+      let(:mail) do
+        Mail.new do
+          from '了承ございます <test@utf8.com'
+          reply_to ['テスト@test.com', 'A@b@c@example.com', 'valid@valid.com', 'john.doe@example..com']
+          to ['mailto:bad@address.com', '']
+          cc ['<bademail@gmail.com']
+          body 'This is the body'
+        end
+      end
+
+      let(:exp) do
+        {
+          from_email_address: '=?UTF-8?B?5LqG5om/44GU44GW44GE44G+44GZ?= <test@utf8.com',
+          reply_to_addresses: ["=?UTF-8?B?44OG44K544OIQHRlc3QuY29t?=", "A@b@c@example.com", "valid@valid.com", "john.doe@example..com"],
+          destination: {
+            to_addresses: ['mailto:bad@address.com', ''],
+            cc_addresses: ['<bademail@gmail.com'],
+            bcc_addresses: []
+          },
+          content: { raw: { data: 'Fixed message body' } }
+        }
+      end
+
+      it { expect(subject).to eq(exp) }
+    end
   end
 end

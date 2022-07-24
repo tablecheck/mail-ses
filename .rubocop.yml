@@ -30,3 +30,7 @@ Style/IfUnlessModifier:
 
 Style/RaiseArgs:
   EnforcedStyle: compact
+
+Style/StringLiterals:
+  Exclude:
+    - 'spec/**/*.rb'
