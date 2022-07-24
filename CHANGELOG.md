@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.0.5
+
+- Pass-thru invalid email addresses.
+
 ### 1.0.4
 
 - Fix missing method error related to message headers.
