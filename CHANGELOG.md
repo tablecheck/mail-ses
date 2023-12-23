@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.1.0
+
+- Mail Gem: Bump minimum version dependency to 2.8.1.
+
 ### 1.0.5
 
 - Pass-thru invalid email addresses.

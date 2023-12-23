@@ -25,11 +25,7 @@ module Mail
       end
 
       def validate_delivery_params
-        if defined?(Mail::CheckDeliveryParams) # mail gem < 2.7.0
-          Mail::CheckDeliveryParams.check(@message)
-        elsif defined?(Mail::SmtpEnvelope) # mail gem >= 2.8.0
-          Mail::SmtpEnvelope.new(@message)
-        end
+        Mail::SmtpEnvelope.new(@message)
       end
 
       def validate_attachments
