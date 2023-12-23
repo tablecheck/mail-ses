@@ -13,6 +13,7 @@ By passing parameters through to the SDK, this gem supports greater flexibility 
 
 * Ruby 2.6+
 * Ruby on Rails 3.2+
+* Mail gem 2.8.1+
 * AWS SDK for Ruby v3 - SESv2
 
 Please use version 0.1.x of this gem for legacy Ruby and AWS SDK support.

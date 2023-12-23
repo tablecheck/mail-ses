@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.6.0'
 
   s.add_dependency('aws-sdk-sesv2', '>= 1.27')
-  s.add_dependency('mail', '>= 2.2.5')
+  s.add_dependency('mail', '>= 2.8.1')
   s.add_development_dependency('net-smtp')
   s.add_development_dependency('nokogiri')
   s.add_development_dependency('rake', '>= 1')
